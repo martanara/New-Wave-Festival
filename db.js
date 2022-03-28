@@ -1,4 +1,4 @@
-module.exports = {
+const db = {
   concerts: [
     { id: 1, performer: 'John Doe', genre: 'Rock', price: 25, day: 1, image: '/img/uploads/1fsd324fsdg.jpg' },
     { id: 2, performer: 'Rebekah Parker', genre: 'R&B', price: 25, day: 1, image: '/img/uploads/2f342s4fsdg.jpg' },
@@ -17,3 +17,5 @@ module.exports = {
     { id: 2, author: 'Amanda Doe', text: 'They really know how to make you happy.' },
   ]
 }
+
+module.exports = db;
