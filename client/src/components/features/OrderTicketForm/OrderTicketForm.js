@@ -39,23 +39,34 @@ class OrderTicketForm extends React.Component {
 
   submitForm = async (e) => {
     const { order } = this.state;
-    const { addSeat } = this.props;
+    const { addSeat, loadSeats } = this.props;
 
     e.preventDefault();
 
     if(order.client && order.email && order.day && order.seat) {
-      addSeat(order);
-      this.setState({ 
+      await loadSeats()
+
+      const isTaken = () => {
+        const { seats } = this.props;
+
+        return (seats.some(item => (item.seat === order.seat && item.day === order.day)));
+      }
+
+      if(!isTaken()){
+        await addSeat(order);
+        this.setState({ 
         order: {
           client: '',
           email: '',
           day: 1,
           seat: '',
         },
-        isError: false,
-      });
-    } else {
-      this.setState({ isError: true });
+          isError: false,
+        });
+        await loadSeats()
+      }
+      } else {
+        this.setState({ isError: true });
     }
   }
 
@@ -92,7 +103,7 @@ class OrderTicketForm extends React.Component {
             </FormGroup>
             <FormGroup check>
               <Label check>
-                <Input required type="checkbox" /> I agree with <a href="#">Terms and conditions</a> and <a href="#">Privacy Policy</a>.
+                <Input required type="checkbox" /> I agree with <a href="/">Terms and conditions</a> and <a href="/">Privacy Policy</a>.
               </Label>
             </FormGroup>
             <Button color="primary" className="mt-3">Submit</Button>
