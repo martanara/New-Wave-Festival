@@ -22,6 +22,7 @@
     "sass": "^1.49.9",
     "uuid": "^8.3.2"
   },
+  "build": "cd client && yarn install && yarn build",
   "scripts": {
     "start": "npx nodemon server.js"
   }
