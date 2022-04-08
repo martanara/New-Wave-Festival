@@ -19,20 +19,17 @@ router.route('/seats/:id').get((req, res) => {
 router.route('/seats').post((req, res) => {
   const { day, seat, client, email } = req.body;
 
-  const isTaken = db.seats.some(dbSeat => dbSeat.day === day && dbSeat.seat === seat)
-
-  console.log(isTaken)
+  const isTaken = db.seats.some(dbSeat => dbSeat.day === day && dbSeat.seat === seat);
 
   if(!isTaken){
     db.seats.push({ id: uuidv4(), day, seat, client, email })
-
-    res.status(409).json({
-    message: 'The slot is already taken...',
-  });
-  } else {
     res.status(200).json({
       message: 'added',
       data: db.seats,
+    });
+  } else {
+    res.status(409).json({
+      message: 'The slot is already taken...',
     });
   }
 });
