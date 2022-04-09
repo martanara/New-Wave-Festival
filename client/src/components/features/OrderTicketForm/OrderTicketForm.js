@@ -39,16 +39,13 @@ class OrderTicketForm extends React.Component {
 
   submitForm = async (e) => {
     const { order } = this.state;
-    const { addSeat, loadSeats } = this.props;
+    const { addSeat } = this.props;
 
     e.preventDefault();
 
     if(order.client && order.email && order.day && order.seat) {
-      await loadSeats()
-
       const isTaken = () => {
         const { seats } = this.props;
-
         return (seats.some(item => (item.seat === order.seat && item.day === order.day)));
       }
 
@@ -63,7 +60,6 @@ class OrderTicketForm extends React.Component {
         },
           isError: false,
         });
-        await loadSeats()
       }
       } else {
         this.setState({ isError: true });

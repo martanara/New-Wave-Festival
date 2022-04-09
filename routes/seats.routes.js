@@ -22,7 +22,9 @@ router.route('/seats').post((req, res) => {
   const isTaken = db.seats.some(dbSeat => dbSeat.day === day && dbSeat.seat === seat);
 
   if(!isTaken){
-    db.seats.push({ id: uuidv4(), day, seat, client, email })
+    db.seats.push({ id: uuidv4(), day, seat, client, email });
+    req.io.emit('updatedSeats', db.seats);
+
     res.status(200).json({
       message: 'added',
       data: db.seats,

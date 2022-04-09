@@ -32,15 +32,12 @@ export const loadSeatsRequest = () => {
 
     dispatch(startRequest({ name: 'LOAD_SEATS' }));
     try {
-
       let res = await axios.get(`${API_URL}/seats`);
       dispatch(loadSeats(res.data));
       dispatch(endRequest({ name: 'LOAD_SEATS' }));
-
     } catch(e) {
       dispatch(errorRequest({ name: 'LOAD_SEATS', error: e.message }));
     }
-
   };
 };
 
@@ -57,7 +54,6 @@ export const addSeatRequest = (seat) => {
     } catch(e) {
       dispatch(errorRequest({ name: 'ADD_SEAT', error: e.message }));
     }
-
   };
 };
 
