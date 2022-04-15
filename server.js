@@ -7,7 +7,7 @@ const socket = require('socket.io');
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
 const seatsRoutes = require('./routes/seats.routes');
-const daysRoutes = require('./routes/seats.routes');
+const daysRoutes = require('./routes/days.routes');
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.once('open', () => {

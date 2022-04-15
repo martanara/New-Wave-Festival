@@ -39,18 +39,19 @@ class OrderTicketForm extends React.Component {
 
   submitForm = async (e) => {
     const { order } = this.state;
-    const { addSeat } = this.props;
+    const { addSeat, loadSeats } = this.props;
 
     e.preventDefault();
 
     if(order.client && order.email && order.day && order.seat) {
       const isTaken = () => {
         const { seats } = this.props;
-        return (seats.some(item => (item.seat === order.seat && item.day === order.day)));
+        return (seats.some(item => (item.seat === order.seat && item.day.festivalDay === order.day)));
       }
 
       if(!isTaken()){
         await addSeat(order);
+        loadSeats();
         this.setState({ 
         order: {
           client: '',

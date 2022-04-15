@@ -1,10 +1,11 @@
 //seats.controller.js
 
 const Seat = require('../models/seat.model');
+const Day = require('../models/day.model');
 
 exports.getAllEntrys = async (req, res) => {
   try {
-    res.json(await Seat.find().populate('Day'));
+    res.json(await Seat.find().populate('day'));
   } 
   catch(err) {
     res.status(500).json({ message: err });
@@ -25,12 +26,20 @@ exports.getEntryById = async (req, res) => {
 exports.addNewEntry = async (req, res) => {
   const { day, seat, client, email } = req.body;
 
-  try {
-    const newSeat = new Seat({ day, seat, client, email })
-    await newSeat.save();
-    res.json({ message: 'OK' });
-  } catch(err) {
-    res.status(500).json({ message: err });
+  const festivalDay = await Day.findOne({ festivalDay: day });
+  const festivalDayId = festivalDay._id;
+  const isTaken = await Seat.findOne({ day: festivalDayId, seat: seat });
+
+  if(!isTaken){
+    try {
+      const newSeat = new Seat({ day: festivalDayId, seat: seat, client: client, email: email })
+      await newSeat.save();
+      res.json({ message: 'OK' });
+    } catch(err) {
+      res.status(500).json({ message: err });
+    }
+  } else {
+    res.status(409).json({ message: 'This seat is already reserved...' });
   }
 };
 

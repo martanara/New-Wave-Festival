@@ -7,25 +7,28 @@ import './SeatChooser.scss';
 class SeatChooser extends React.Component {
   
   componentDidMount() {
-    const { loadSeats, loadSeatsData, seats } = this.props;
+    const { loadSeats, loadSeatsData } = this.props;
     loadSeats();
     this.socket = io(process.env.PORT || 'localhost:8000');
     this.socket.on('updatedSeats', (seats) => {
-      loadSeatsData(seats)
+      loadSeatsData(seats);
     });
   }
 
   isTaken = (seatId) => {
     const { seats, chosenDay } = this.props;
-
-    return (seats.some(item => (item.seat === seatId && item.day === chosenDay)));
+    
+    return (seats.some(item => (item.seat === seatId && item.day.festivalDay === chosenDay)));
   }
 
+  
   freeSeatsCount = () => {
     const { seats, chosenDay } = this.props;
-    const occupiedSeatsCount = seats.filter(seat => seat.day === chosenDay);
+
+    const occupiedSeatsCount = seats.filter(seat => seat?.day?.festivalDay === chosenDay);
     return 50 - occupiedSeatsCount.length
   }
+  
 
   prepareSeat = (seatId) => {
     const { chosenSeat, updateSeat } = this.props;
@@ -38,9 +41,8 @@ class SeatChooser extends React.Component {
 
   render() {
 
-    const { prepareSeat } = this;
+    const { prepareSeat, freeSeatsCount } = this;
     const { requests } = this.props;
-    const { freeSeatsCount } = this;
 
     return (
       <div>
