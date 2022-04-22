@@ -26,7 +26,7 @@ exports.getEntryById = async (req, res) => {
 exports.addNewEntry = async (req, res) => {
   const { day, seat, client, email } = req.body;
 
-  const festivalDay = await Day.findOne({ festivaDay: day });
+  const festivalDay = await Day.findOne({ festivalDay: day });
   const festivalDayId = festivalDay._id;
   const isTaken = await Seat.findOne({ day: festivalDayId, seat: seat });
 
