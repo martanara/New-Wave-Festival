@@ -18,18 +18,17 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/NewWaveDBtest', { useNewUrlParser: true, useUnifiedTopology: true });
 
 /*
 const NODE_ENV = process.env.NODE_ENV;
 let dbUri = '';
 
-if(NODE_ENV === 'production') dbUri = 'mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority';
-else if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest';
-else dbUri = 'mongodb://localhost:27017/NewWaveDB';
+if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest'; 
+else dbUri = dbUri = 'mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority';
 
 mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
-
 */
 
 const db = mongoose.connection;
@@ -63,3 +62,5 @@ app.get('*', (req, res) => {
 app.use((req, res) => {
   res.status(404).send('Page not found...');
 });
+
+module.exports = server;

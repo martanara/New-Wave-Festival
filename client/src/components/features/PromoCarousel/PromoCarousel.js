@@ -5,9 +5,9 @@ import './PromoCarousel.scss';
 const items = [
   {
     src: '/img/promo/promo1.jpg',
-    header: 'Great atmosphere!',
     caption: 'Have fun with thousands of people!',
-    alt: 'Have fun with thousands of people!',
+    altText: 'Have fun with thousands of people!',
+    header: 'Great atmosphere!',
   },
   {
     src: '/img/promo/promo2.jpg',

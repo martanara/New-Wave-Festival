@@ -15,9 +15,8 @@ exports.getAllEntrys = async (req, res) => {
       const seats = await Seat.find({ day: concert.day });
       console.log(seats.length);
       concert.day = day.festivalDay;
-      concert.ticketsSold = seats.length;
+      concert.ticketsLeft = 50 - seats.length;
     } 
-
     console.log(concerts);
     res.json(concerts);
   } 
@@ -38,10 +37,10 @@ exports.getEntryById = async (req, res) => {
 };
 
 exports.addNewEntry = async (req, res) => {
-  const { performer, genre, price, day } = req.body;
+  const { performer, genre, price, day, image } = req.body;
 
   try {
-    const newConcert = new Concert({ performer, genre, price, day })
+    const newConcert = new Concert({ performer, genre, price, day, image })
     await newConcert.save();
     res.json({ message: 'OK' });
   } catch(err) {
