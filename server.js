@@ -19,6 +19,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 mongoose.connect('mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+
+/*
+const NODE_ENV = process.env.NODE_ENV;
+let dbUri = '';
+
+if(NODE_ENV === 'production') dbUri = 'mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority';
+else if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest';
+else dbUri = 'mongodb://localhost:27017/NewWaveDB';
+
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+*/
+
 const db = mongoose.connection;
 
 db.once('open', () => {
