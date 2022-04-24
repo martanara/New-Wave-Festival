@@ -18,18 +18,14 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// mongoose.connect('mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect('mongodb://localhost:27017/NewWaveDBtest', { useNewUrlParser: true, useUnifiedTopology: true });
 
-/*
 const NODE_ENV = process.env.NODE_ENV;
 let dbUri = '';
 
 if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest'; 
-else dbUri = dbUri = 'mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority';
+else dbUri = dbUri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority`;
 
 mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
-*/
 
 const db = mongoose.connection;
 
