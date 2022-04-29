@@ -1,6 +1,5 @@
 //concerts.controller.js
 
-const concertModel = require('../models/concert.model');
 const Concert = require('../models/concert.model');
 const Day = require('../models/day.model');
 const Seat = require('../models/seat.model');
@@ -13,11 +12,9 @@ exports.getAllEntrys = async (req, res) => {
     for (let concert of concerts){
       const day = await Day.findOne({ _id: concert.day });
       const seats = await Seat.find({ day: concert.day });
-      console.log(seats.length);
       concert.day = day.festivalDay;
       concert.ticketsLeft = 50 - seats.length;
-    } 
-    console.log(concerts);
+    }; 
     res.json(concerts);
   } 
   catch(err) {

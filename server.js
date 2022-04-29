@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 const socket = require('socket.io');
+const helmet = require('helmet');
 
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
@@ -10,6 +11,7 @@ const seatsRoutes = require('./routes/seats.routes');
 const daysRoutes = require('./routes/days.routes');
 
 const app = express();
+app.use(helmet());
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '/client/build')));
@@ -23,10 +25,7 @@ const NODE_ENV = process.env.NODE_ENV;
 let dbUri = '';
 
 if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest'; 
-else dbUri = dbUri = 'mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority';
-
-// `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority`
-// 'mongodb+srv://martanara:7yYDDydUCpLA8mR@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority';
+else dbUri = dbUri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.rt8m7.mongodb.net/NewWaveDB?retryWrites=true&w=majority`;
 
 mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 

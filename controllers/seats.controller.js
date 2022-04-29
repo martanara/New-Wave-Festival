@@ -1,5 +1,7 @@
 //seats.controller.js
 
+const sanitize = require('mongo-sanitize');
+
 const Seat = require('../models/seat.model');
 const Day = require('../models/day.model');
 
@@ -24,7 +26,8 @@ exports.getEntryById = async (req, res) => {
 };
 
 exports.addNewEntry = async (req, res) => {
-  const { day, seat, client, email } = req.body;
+  const cleanBody = await sanitize(req.body);
+  const { day, seat, client, email } = cleanBody;
 
   const festivalDay = await Day.findOne({ festivalDay: day });
   const festivalDayId = festivalDay._id;
