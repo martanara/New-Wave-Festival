@@ -5,6 +5,8 @@ const sanitize = require('mongo-sanitize');
 const Seat = require('../models/seat.model');
 const Day = require('../models/day.model');
 
+const NODE_ENV = process.env.NODE_ENV;
+
 exports.getAllEntrys = async (req, res) => {
   try {
     res.json(await Seat.find().populate('day'));
@@ -39,7 +41,8 @@ exports.addNewEntry = async (req, res) => {
       await newSeat.save();
       res.json({ message: 'OK' });
     } catch(err) {
-      res.status(500).json({ message: err });
+      if(NODE_ENV === 'test') console.log(err)
+      else res.status(500).json({ message: 'Something went wrong...' });
     }
   } else {
     res.status(409).json({ message: 'This seat is already reserved...' });
